@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
       body: const Center(
         child: Text('selamat datang'),
       ),
-      drawer: const Sidemenu(),
+      drawer: const SideMenu(),
     );
   }
 }

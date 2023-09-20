@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tugas1/list_data.dart';
 import 'package:tugas1/home_page.dart';
 
-class Sidemenu extends StatelessWidget {
-  const Sidemenu({Key? key}) : super(key: key);
+class SideMenu extends StatelessWidget {
+  const SideMenu({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Drawer(
