@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tugas1/home_page.dart';
-import 'package:tugas1/login_page.dart';
 import 'package:tugas1/splash.dart';
 
 void main() {
