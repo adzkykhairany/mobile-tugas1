@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tugas1/list_data.dart';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:tugas1/list_data.dart';
-import 'package:tugas1/side_menu.dart';
 
 class EditData extends StatefulWidget {
   const EditData(
@@ -13,6 +12,7 @@ class EditData extends StatefulWidget {
   final String nama;
   final String jurusan;
   final String id;
+
   @override
   _EditDataState createState() => _EditDataState();
 }
@@ -23,11 +23,9 @@ class _EditDataState extends State<EditData> {
 
   Future updateData(String nama, String jurusan) async {
     String url = Platform.isAndroid
-        ? 'http://10.0.2.2/pem_mob/index.php'
-        : 'http://localhost/pem_mob/index.php';
-    // String url = 'http://localhost/pem_mob/index.php';
+        ? 'http://192.168.1.7/mobile-tugas1/index.php'
+        : 'http://localhost/mobile-tugas1/index.php';
 
-    //String url = 'http://127.0.0.1/apiTrash/prosesLoginDriver.php';
     Map<String, String> headers = {'Content-Type': 'application/json'};
     String jsonBody =
         '{"id": "${widget.id}","nama": "$nama", "jurusan": "$jurusan"}';
@@ -41,13 +39,12 @@ class _EditDataState extends State<EditData> {
       return json.decode(response.body);
     } else {
       print(response.statusCode);
-      throw Exception('Failed to update data');
+      throw Exception('Gagal memperbarui data');
     }
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     namaController.text = widget.nama;
     jurusanController.text = widget.jurusan;
@@ -59,7 +56,6 @@ class _EditDataState extends State<EditData> {
       appBar: AppBar(
         title: const Text('Edit Data Mahasiswa'),
       ),
-      drawer: const SideMenu(),
       body: Container(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -82,32 +78,30 @@ class _EditDataState extends State<EditData> {
               onPressed: () {
                 String nama = namaController.text;
                 String jurusan = jurusanController.text;
-                // print(nama);
                 updateData(nama, jurusan).then((result) {
-                  //print(result['pesan']);
                   if (result['pesan'] == 'berhasil') {
                     showDialog(
-                        context: context,
-                        builder: (context) {
-                          //var namauser2 = namauser;
-                          return AlertDialog(
-                            title: const Text('Data berhasil di update'),
-                            content: const Text('ok'),
-                            actions: [
-                              TextButton(
-                                child: const Text('OK'),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const ListData(),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          );
-                        });
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Data berhasil di update'),
+                          content: const Text('OK'),
+                          actions: [
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ListData(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   }
                   setState(() {});
                 });
@@ -115,10 +109,6 @@ class _EditDataState extends State<EditData> {
             ),
           ],
         ),
-
-        //     ],
-        //   ),
-        // ),
       ),
     );
   }
