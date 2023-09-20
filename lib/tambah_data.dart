@@ -18,7 +18,7 @@ class _TambahDataState extends State<TambahData> {
   Future postData(String nama, String jurusan) async {
 // print(nama);
     String url = Platform.isAndroid
-        ? 'http://192.168.253.220/mobile-tugas1/index.php'
+        ? 'http://10.100.5.58/mobile-tugas1/index.php'
         : 'http://localhost/mobile-tugas1/index.php';
 //String url = 'http://127.0.0.1/apiTrash/prosesLoginDriver.php';
     Map<String, String> headers = {'Content-Type': 'application/json'};

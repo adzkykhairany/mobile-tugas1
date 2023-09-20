@@ -16,7 +16,7 @@ class ListData extends StatefulWidget {
 class _ListDataState extends State<ListData> {
   List<Map<String, String>> dataMahasiswa = [];
   String url = Platform.isAndroid
-      ? 'http://192.168.253.220/mobile-tugas1/index.php'
+      ? 'http://10.100.5.58/mobile-tugas1/index.php'
       : 'http://localhost/mobile-tugas1/index.php';
 
   @override
@@ -40,6 +40,23 @@ class _ListDataState extends State<ListData> {
       });
     } else {
       throw Exception('Failed to load data');
+    }
+  }
+
+  Future editData(int id, Map<String, dynamic> updatedData) async {
+    final response = await http.put(
+      Uri.parse('$url?id=$id'),
+      headers: {
+        'Content-Type':
+            'application/json', // Sesuaikan dengan tipe data yang digunakan di API Anda
+      },
+      body: json.encode(updatedData),
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to edit data');
     }
   }
 
@@ -90,7 +107,37 @@ class _ListDataState extends State<ListData> {
                     IconButton(
                       icon: Icon(Icons.edit),
                       onPressed: () {
-//editMahasiswa(index);
+                        // Implementasikan logika edit di sini
+                        editData(int.parse(dataMahasiswa[index]['id']!), {
+                          // Gantilah dengan data yang ingin Anda edit
+                          'nama': 'Nama yang Diperbarui',
+                          'jurusan': 'Jurusan yang Diperbarui',
+                        }).then((result) {
+                          if (result['pesan'] == 'berhasil') {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text('Data berhasil di edit'),
+                                  content: Text('ok'),
+                                  actions: [
+                                    TextButton(
+                                      child: Text('OK'),
+                                      onPressed: () {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ListData(),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        });
                       },
                     ),
                     IconButton(
