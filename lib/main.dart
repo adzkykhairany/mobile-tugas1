@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tugas1/home_page.dart';
 import 'package:tugas1/login_page.dart';
+import 'package:tugas1/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,8 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Flutter Menu',
-      home: LoginPage(),
+      title: 'Unsoed App CRUD',
+      home: SplashScreen(),
     );
   }
 }

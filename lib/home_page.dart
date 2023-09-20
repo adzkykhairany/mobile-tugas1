@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
         title: const Text('Home Page'),
       ),
       body: const Center(
-        child: Text('Ini adalah halaman Home'),
+        child: Text('selamat datang'),
       ),
       drawer: const Sidemenu(),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tugas1/about_page.dart';
+import 'package:tugas1/list_data.dart';
 import 'package:tugas1/home_page.dart';
 
 class Sidemenu extends StatelessWidget {
@@ -10,7 +10,7 @@ class Sidemenu extends StatelessWidget {
       child: ListView(
         children: [
           const DrawerHeader(
-            child: Text('Sidemenu'),
+            child: Text('Menu Aplikasi'),
           ),
           ListTile(
             leading: const Icon(Icons.home),
@@ -27,13 +27,13 @@ class Sidemenu extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.info),
-            title: const Text('About'),
+            title: const Text('Data Mahasiswa'),
             onTap: () {
 // Navigasi ke halaman Settings
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AboutPage(),
+                  builder: (context) => ListData(),
                 ),
               );
             },
