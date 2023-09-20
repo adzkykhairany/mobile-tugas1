@@ -19,8 +19,8 @@ class _TambahDataState extends State<TambahData> {
   Future postData(String nama, String jurusan) async {
 // print(nama);
     String url = Platform.isAndroid
-        ? 'http://10.0.2.2/pem_mob/index.php'
-        : 'http://localhost/pem_mob/index.php';
+        ? 'http://192.168.1.7/mobile-tugas1/index.php'
+        : 'http://localhost/mobile-tugas1/index.php';
     // String url = 'http://localhost/pem_mob/index.php';
 
 //String url = 'http://127.0.0.1/apiTrash/prosesLoginDriver.php';

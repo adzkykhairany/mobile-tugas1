@@ -40,6 +40,7 @@ class _EditDataState extends State<EditData> {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
+      print(response.statusCode);
       throw Exception('Failed to update data');
     }
   }

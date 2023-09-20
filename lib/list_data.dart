@@ -1,25 +1,26 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:tugas1/side_menu.dart';
-import 'package:tugas1/tambah_data.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:tugas1/view_data.dart';
+import 'package:tugas1/edit_data.dart';
+import 'package:tugas1/side_menu.dart';
+import 'package:tugas1/tambah_data.dart';
 
 class ListData extends StatefulWidget {
   const ListData({super.key});
+
   @override
-// ignore: library_private_types_in_public_api
+  // ignore: library_private_types_in_public_api
   _ListDataState createState() => _ListDataState();
 }
 
 class _ListDataState extends State<ListData> {
   List<Map<String, String>> dataMahasiswa = [];
   String url = Platform.isAndroid
-      ? 'http://10.0.2.2/pem_mob/index.php'
-      : 'http://localhost/pem_mob/index.php';
-  // String url = 'http://localhost/pem_mob/index.php';
+      ? 'http://192.168.1.7/mobile-tugas1/index.php'
+      : 'http://localhost/mobile-tugas1/index.php';
+  // String url = 'http://localhost/api-flutter/index.php';
   @override
   void initState() {
     super.initState();
@@ -41,23 +42,6 @@ class _ListDataState extends State<ListData> {
       });
     } else {
       throw Exception('Failed to load data');
-    }
-  }
-
-  Future editData(int id, Map<String, dynamic> updatedData) async {
-    final response = await http.put(
-      Uri.parse('$url?id=$id'),
-      headers: {
-        'Content-Type':
-            'application/json', // Sesuaikan dengan tipe data yang digunakan di API Anda
-      },
-      body: json.encode(updatedData),
-    );
-
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to edit data');
     }
   }
 
@@ -102,50 +86,45 @@ class _ListDataState extends State<ListData> {
                     IconButton(
                       icon: Icon(Icons.visibility),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ViewData(
-                                    nama:
-                                        dataMahasiswa[index]['nama'] as String,
-                                    jurusan: dataMahasiswa[index]['jurusan']
-                                        as String)));
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text('Detail Mahasiswa'),
+                              content: SizedBox(
+                                height: 50,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                        'Nama: ${dataMahasiswa[index]['nama']}'),
+                                    Text(
+                                        'Jurusan: ${dataMahasiswa[index]['jurusan']}')
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    // Add your code to handle the action when the user dismisses the alert.
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                     ),
                     IconButton(
                       icon: Icon(Icons.edit),
                       onPressed: () {
-                        // Implementasikan logika edit di sini
-                        editData(int.parse(dataMahasiswa[index]['id']!), {
-                          // Gantilah dengan data yang ingin Anda edit
-                          'nama': 'Nama yang Diperbarui',
-                          'jurusan': 'Jurusan yang Diperbarui',
-                        }).then((result) {
-                          if (result['pesan'] == 'berhasil') {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text('Data berhasil di edit'),
-                                  content: Text('ok'),
-                                  actions: [
-                                    TextButton(
-                                      child: Text('OK'),
-                                      onPressed: () {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => ListData(),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          }
-                        });
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => EditData(
+                                id: dataMahasiswa[index]['id'] as String,
+                                nama: dataMahasiswa[index]['nama'] as String,
+                                jurusan: dataMahasiswa[index]['jurusan']
+                                    as String)));
                       },
                     ),
                     IconButton(
