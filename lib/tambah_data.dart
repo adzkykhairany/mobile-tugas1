@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+// import 'dart:ui_web';
 import 'package:tugas1/list_data.dart';
 import 'package:tugas1/side_menu.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,10 @@ class _TambahDataState extends State<TambahData> {
   Future postData(String nama, String jurusan) async {
 // print(nama);
     String url = Platform.isAndroid
-        ? 'http://10.100.5.58/mobile-tugas1/index.php'
-        : 'http://localhost/mobile-tugas1/index.php';
+        ? 'http://10.0.2.2/pem_mob/index.php'
+        : 'http://localhost/pem_mob/index.php';
+    // String url = 'http://localhost/pem_mob/index.php';
+
 //String url = 'http://127.0.0.1/apiTrash/prosesLoginDriver.php';
     Map<String, String> headers = {'Content-Type': 'application/json'};
     String jsonBody = '{"nama": "$nama", "jurusan": "$jurusan"}';
@@ -65,7 +68,7 @@ class _TambahDataState extends State<TambahData> {
                 String jurusan = jurusanController.text;
 // print(nama);
                 postData(nama, jurusan).then((result) {
-//print(result['pesan']);
+                  print(result['pesan']);
                   if (result['pesan'] == 'berhasil') {
                     showDialog(
                         context: context,

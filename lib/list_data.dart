@@ -5,6 +5,7 @@ import 'package:tugas1/side_menu.dart';
 import 'package:tugas1/tambah_data.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:tugas1/view_data.dart';
 
 class ListData extends StatefulWidget {
   const ListData({super.key});
@@ -16,9 +17,9 @@ class ListData extends StatefulWidget {
 class _ListDataState extends State<ListData> {
   List<Map<String, String>> dataMahasiswa = [];
   String url = Platform.isAndroid
-      ? 'http://10.100.5.58/mobile-tugas1/index.php'
-      : 'http://localhost/mobile-tugas1/index.php';
-
+      ? 'http://10.0.2.2/pem_mob/index.php'
+      : 'http://localhost/pem_mob/index.php';
+  // String url = 'http://localhost/pem_mob/index.php';
   @override
   void initState() {
     super.initState();
@@ -101,7 +102,14 @@ class _ListDataState extends State<ListData> {
                     IconButton(
                       icon: Icon(Icons.visibility),
                       onPressed: () {
-//lihatMahasiswa(index);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ViewData(
+                                    nama:
+                                        dataMahasiswa[index]['nama'] as String,
+                                    jurusan: dataMahasiswa[index]['jurusan']
+                                        as String)));
                       },
                     ),
                     IconButton(
